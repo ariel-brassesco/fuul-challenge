@@ -1,9 +1,8 @@
-/* eslint-disable unicorn/no-null */
 import { Knex } from "knex";
 
 import { commonColumns } from "../../utils";
 
-export async function up(knex: Knex): Promise<any> {
+export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
     SET TIMEZONE='UTC';
   `);
@@ -12,6 +11,7 @@ export async function up(knex: Knex): Promise<any> {
     commonColumns(knex, table);
     table.string("code").unique().notNullable();
     table.string("name");
+    // eslint-disable-next-line unicorn/no-null
     table.decimal("price", null, 18);
     table.string("currencyCode").notNullable();
   });
@@ -28,7 +28,7 @@ export async function up(knex: Knex): Promise<any> {
   });
 }
 
-export async function down(knex: Knex): Promise<any> {
+export async function down(knex: Knex): Promise<void> {
   const tables = ["product", "discount_rule"];
 
   for (const table of tables.reverse()) {

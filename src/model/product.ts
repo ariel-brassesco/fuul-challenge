@@ -1,8 +1,14 @@
-import { Base, getBaseModifiers } from "./base";
+import { Base } from "./base";
 
+/*
+  Product table structure:
+  - code: string for unique identifier.
+  - name: string for display description.
+  - price: unitary price.
+  - currencyCode: currency of the price.
+*/
 export class Product extends Base {
   static tableName = "product";
-  static modifiers = getBaseModifiers(Product);
 
   code!: string;
 
@@ -12,5 +18,3 @@ export class Product extends Base {
 
   currencyCode!: string;
 }
-
-export type ProductData = Omit<Product, keyof Base>;

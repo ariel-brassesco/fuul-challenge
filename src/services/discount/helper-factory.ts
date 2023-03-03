@@ -3,6 +3,13 @@ import { BulkDiscountHelper } from "./bulk";
 import { DiscountHelper } from "./helper";
 import { TwoForOneDiscountHelper } from "./two-for-one";
 
+/*
+  This class handle the discount helpers needed.
+
+  The function is to return one or more DiscountHelper class.
+
+  It is easy to add more discount helpers in the helper map.
+*/
 export class DiscountHelperFactory {
   private static getHelperMap = () => ({
     [DiscountRuleType.BULK]: new BulkDiscountHelper(),
@@ -18,7 +25,7 @@ export class DiscountHelperFactory {
   }
 
   public static getAllByTypes<Type extends DiscountHelper>(
-    types: DiscountRuleType[]
+    types: string[]
   ): Type[] {
     const helperMap = this.getHelperMap();
     const helpers: Type[] = [];

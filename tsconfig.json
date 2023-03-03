@@ -5,8 +5,6 @@
     "incremental": true,
     "target": "es2022",
     "lib": ["esnext"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "baseUrl": ".",
@@ -36,7 +34,7 @@
   },
   "ts-node": {
     "swc": true,
-    "transpileOnly": true,
-    "require": ["tsconfig-paths/register"]
-  }
+    "transpileOnly": true
+  },
+  "include": ["src","test"]
 }

@@ -3,6 +3,10 @@ import { Decimal } from "decimal.js";
 import { discountService } from "./discount";
 import { productService } from "./product";
 
+/*
+  The CheckoutService class handle the items in checkout, 
+  apply discounts, calculate subtotal and total.  
+*/
 export class CheckoutService {
   private items: Record<string, number> = {};
 
@@ -22,6 +26,8 @@ export class CheckoutService {
     }
 
     this.add(product.code);
+
+    return this.parseItems();
   }
 
   public parseItems() {
@@ -50,8 +56,10 @@ export class CheckoutService {
   }
 
   public async getTotal() {
-    const subtotal = await this.getSubTotal();
-    const discount = await this.getDiscount();
+    const [subtotal, discount] = await Promise.all([
+      this.getSubTotal(),
+      this.getDiscount(),
+    ]);
 
     return new Decimal(subtotal).minus(discount).toString();
   }

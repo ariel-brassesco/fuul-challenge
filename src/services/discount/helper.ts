@@ -3,8 +3,21 @@ import { Decimal } from "decimal.js";
 import { DiscountRule, DiscountRuleType } from "../../model";
 import { discountRepository } from "./repository";
 
+/*
+  Base class for a discount handler.
+  
+  Define the common methods and the structure of the helpers
+  to manage discount promotions.
+*/
 export class DiscountHelper {
   public type!: DiscountRuleType;
+
+  protected hasProduct(rule: DiscountRule, productCode: string) {
+    return (
+      rule.applyOnProducts?.includes("all") ||
+      rule.applyOnProducts?.includes(productCode)
+    );
+  }
 
   protected async applyRule(
     _rule: DiscountRule,

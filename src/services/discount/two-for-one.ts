@@ -4,6 +4,9 @@ import { DiscountRule, DiscountRuleType } from "../../model";
 import { productService } from "../product";
 import { DiscountHelper } from "./helper";
 
+/*
+  The particular implementation for 2x1 promotion.
+*/
 export class TwoForOneDiscountHelper extends DiscountHelper {
   public type = DiscountRuleType.TWO_FOR_ONE;
 
@@ -12,9 +15,7 @@ export class TwoForOneDiscountHelper extends DiscountHelper {
     productCode: string,
     quantity: number
   ) {
-    const hasProduct =
-      rule.applyOnProducts?.includes("all") ||
-      rule.applyOnProducts?.includes(productCode);
+    const hasProduct = this.hasProduct(rule, productCode);
 
     if (!hasProduct) {
       return "0";
@@ -26,7 +27,7 @@ export class TwoForOneDiscountHelper extends DiscountHelper {
       return "0";
     }
 
-    const discountQuantity = Math.floor(quantity / 2);
+    const discountQuantity = Decimal.floor(quantity / 2);
     const discount = new Decimal(product.price).mul(discountQuantity);
 
     return discount.toString();

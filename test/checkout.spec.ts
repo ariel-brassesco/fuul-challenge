@@ -1,7 +1,6 @@
 import { CheckoutService } from "../src/services";
 import { initDisposableDatabase } from "./helper";
 
-/* eslint-disable sonarjs/no-identical-functions */
 let disposeDatabase;
 
 describe("Checkout Service Tests", () => {

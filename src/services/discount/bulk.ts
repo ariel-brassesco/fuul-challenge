@@ -4,6 +4,9 @@ import { DiscountRule, DiscountRuleType } from "../../model";
 import { productService } from "../product";
 import { DiscountHelper } from "./helper";
 
+/*
+  The particular implementation for bulk promotion.
+*/
 export class BulkDiscountHelper extends DiscountHelper {
   public type = DiscountRuleType.BULK;
 
@@ -12,9 +15,7 @@ export class BulkDiscountHelper extends DiscountHelper {
     productCode: string,
     quantity: number
   ) {
-    const hasProduct =
-      rule.applyOnProducts?.includes("all") ||
-      rule.applyOnProducts?.includes(productCode);
+    const hasProduct = this.hasProduct(rule, productCode);
 
     if (!hasProduct) {
       return "0";

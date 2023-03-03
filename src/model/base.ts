@@ -1,28 +1,9 @@
 import dayjs from "dayjs";
-import { Model, Modifiers } from "objection";
+import { Model } from "objection";
 
-export const getBaseModifiers = <T extends typeof Model>(
-  model: T
-): Modifiers => ({
-  deleted(query, columnReference: string) {
-    const { ref } = model;
-    const column = columnReference ?? ref("deletedAt");
-    return query.whereNotNull(column);
-  },
-
-  notDeleted(query, columnReference: string) {
-    const { ref } = model;
-    const column = columnReference ?? ref("deletedAt");
-    return query.whereNull(column);
-  },
-
-  ordered: (query, columnReference: string) => {
-    const { ref } = model;
-    const column = columnReference ?? ref("createdAt");
-    return query.orderBy(column, "DESC");
-  },
-});
-
+/*
+ Define common database table columns and some behavior
+*/
 export class Base extends Model {
   static modelPaths = [__dirname];
   static useLimitInFirst = true;
@@ -43,6 +24,3 @@ export class Base extends Model {
     this.updatedAt = dayjs().toDate();
   }
 }
-
-export type Optional<T> = T | undefined;
-export type Nullable<T> = Optional<T> | null;

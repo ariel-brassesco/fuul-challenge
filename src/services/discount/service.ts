@@ -1,22 +1,31 @@
 import { Decimal } from "decimal.js";
 
-import { DiscountRule, DiscountRuleType } from "../../model";
+import { DiscountRuleType } from "../../model";
 import { DiscountHelperFactory } from "./helper-factory";
 import { discountRepository } from "./repository";
 
+/*
+  This service is used from outside, this class has the function
+  to manage the discount promotions.
+
+  An external service must use this service to interact with any discount.
+  The other class or functions defined are auxiliary elements for 
+  this class and must not be used outside this class.
+*/
 class DiscountService {
   public async deactivate(rule: DiscountRuleType) {
-    await DiscountRule.query().update({ active: false }).where({ type: rule });
+    return discountRepository.deactivate(rule);
   }
 
   public async activate(rule: DiscountRuleType) {
-    await DiscountRule.query().update({ active: false }).where({ type: rule });
+    return discountRepository.activate(rule);
   }
 
-  public async update(rule: DiscountRuleType, applyOnProducts: string[]) {
-    await DiscountRule.query()
-      .update({ applyOnProducts })
-      .where({ type: rule });
+  public async updateApplyProducts(
+    rule: DiscountRuleType,
+    applyOnProducts: string[]
+  ) {
+    return discountRepository.update(rule, applyOnProducts);
   }
 
   public async findByType(rule: DiscountRuleType) {
